@@ -51,13 +51,13 @@ use DirectAdmin;
 This will return an array of all users currently owned the reseller:
 
 ```php
-return DirectAdmin::request('GET', 'SHOW_USERS');
+return DirectAdmin::get()->request('SHOW_USERS');
 ```
 
 This will return an array of the user's usages:
 
 ```php
-return DirectAdmin::request('GET', 'SHOW_USER_USAGE', ['user' => 'john']);
+return DirectAdmin::get()->request('SHOW_USER_USAGE', ['user' => 'john']);
 ```
 
 For more commands check the [DirectAdmin API docs](https://www.directadmin.com/api.php).
