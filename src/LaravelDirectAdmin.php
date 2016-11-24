@@ -51,13 +51,16 @@ class LaravelDirectAdmin
      *
      * @param $methodName
      * @param $arguments
+     * @return bool
      * @throws \Exception
      */
     public function __call($methodName, $arguments)
     {
-        if(!$this->extractMethod($methodName, $arguments)) {
+        if(!$response = $this->extractMethod($methodName, $arguments[0])) {
             throw new \Exception("Invalid method called");
         }
+
+        return $response;
     }
 
     /**
@@ -86,10 +89,13 @@ class LaravelDirectAdmin
      * @param $method
      * @param $command
      * @param $arguments
+     * @return array
      */
     private function extractCommand($method, $command, $arguments)
     {
-        return $this->{$method}->request(
+        $this->connection->set_method(strtoupper($method));
+
+        return $this->request(
             $this->camelToSnake($command),
             $arguments
         );
@@ -103,7 +109,7 @@ class LaravelDirectAdmin
      */
     private function camelToSnake($string)
     {
-        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $string, $matches);
         $ret = $matches[0];
         foreach ($ret as &$match) {
             $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
