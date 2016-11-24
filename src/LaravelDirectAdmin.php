@@ -56,7 +56,9 @@ class LaravelDirectAdmin
      */
     public function __call($methodName, $arguments)
     {
-        if(!$response = $this->extractMethod($methodName, $arguments[0])) {
+        $arguments = count($arguments) > 0 ? $arguments[0] : $arguments ;
+
+        if(!$response = $this->extractMethod($methodName, $arguments)) {
             throw new \Exception("Invalid method called");
         }
 
@@ -72,8 +74,6 @@ class LaravelDirectAdmin
      */
     private function extractMethod($methodName, $arguments)
     {
-        $arguments = count($arguments) > 0 ? $arguments[0] : $arguments ;
-
         if(strpos($methodName, "get") !== false) {
             return $this->extractCommand("get", substr($methodName, 3), $arguments);
         }
