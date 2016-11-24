@@ -8,6 +8,8 @@ class LaravelDirectAdmin
 {
     protected $connection;
 
+    protected $command;
+
     public function __construct(DirectAdmin $connection)
     {
         $this->connection = $connection;
@@ -43,4 +45,70 @@ class LaravelDirectAdmin
         $this->connection->query('/CMD_API_'.$command, $options);
         return $this->connection->fetch_parsed_body();
     }
+
+    /**
+     * Magic Method
+     *
+     * @param $methodName
+     * @param $arguments
+     * @throws \Exception
+     */
+    public function __call($methodName, $arguments)
+    {
+        if(!$this->extractMethod($methodName, $arguments)) {
+            throw new \Exception("Invalid method called");
+        }
+    }
+
+    /**
+     * Extract command name from magic method
+     *
+     * @param $methodName
+     * @param $arguments
+     * @return bool
+     */
+    private function extractMethod($methodName, $arguments)
+    {
+        if(strpos($methodName, "get") !== false) {
+            return $this->extractCommand("get", substr($methodName, 3), $arguments);
+        }
+
+        if(strpos($methodName, "post") !== false) {
+            return $this->extractCommand("post", substr($methodName, 4), $arguments);
+        }
+
+        return false;
+    }
+
+    /**
+     * Set the command based on the magic method name
+     *
+     * @param $method
+     * @param $command
+     * @param $arguments
+     */
+    private function extractCommand($method, $command, $arguments)
+    {
+        return $this->{$method}->request(
+            $this->camelToSnake($command),
+            $arguments
+        );
+    }
+
+    /**
+     * Convert CamelCase to snake_case
+     *
+     * @param $string
+     * @return string
+     */
+    private function camelToSnake($string)
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+        return strtoupper(implode('_', $ret));
+    }
+
 }
