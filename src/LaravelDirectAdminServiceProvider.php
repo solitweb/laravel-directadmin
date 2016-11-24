@@ -5,7 +5,7 @@ namespace Solitweb\LaravelDirectAdmin;
 use Solitweb\DirectAdmin\DirectAdmin;
 use Illuminate\Support\ServiceProvider;
 
-class DirectAdminServiceProvider extends ServiceProvider
+class LaravelDirectAdminServiceProvider extends ServiceProvider
 {
     public function boot()
     {
