@@ -4,7 +4,7 @@ namespace Solitweb\LaravelDirectAdmin;
 
 use Illuminate\Support\Facades\Facade;
 
-class DirectAdminFacade extends Facade
+class LaravelDirectAdminFacade extends Facade
 {
     /**
      * Get the registered name of the component.
