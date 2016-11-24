@@ -60,6 +60,11 @@ This will return an array of the user's usages:
 return DirectAdmin::get()->request('SHOW_USER_USAGE', ['user' => 'john']);
 ```
 
+For more commands check the [DirectAdmin API docs](https://www.directadmin.com/api.php).
+You have to copy the command without the `CMD_API_`.
+
+### Magic Methods
+
 It's also possible to make use of magic methods to get the data from the API as shown below:
 
 ```php
@@ -78,8 +83,7 @@ return DirectAdmin::postAccountAdmin([
 // Translates to DirectAdmin->post()->request('ACCOUNT_ADMIN', [arguments]);
 ```
 
-For more commands check the [DirectAdmin API docs](https://www.directadmin.com/api.php).
-You have to copy the command without the `CMD_API_`.
+Magic Methods are named after the method (get/post) followed by the command without `CMD_API_` in CamelCase. So, if you want to make a GET request with the CMD_API_SHOW_ALL_USERS command, the magic method would be `getShowAllUsers()`.
 
 ## Credits
 - [Phi1 'l0rdphi1' Stier](mailto:l0rdphi1@liquenox.net)
