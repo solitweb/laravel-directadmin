@@ -2,7 +2,7 @@
 
 namespace Solitweb\LaravelDirectAdmin;
 
-use Solitweb\DirectAdmin\DirectAdmin;
+use Solitweb\DirectAdmin\DirectAdmin as DAConnection;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelDirectAdminServiceProvider extends ServiceProvider
@@ -19,7 +19,7 @@ class LaravelDirectAdminServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(LaravelDirectAdmin::class, function () {
-            $api = new DirectAdmin();
+            $api = new DAConnection();
             $api->connect(config('laravel-directadmin.domain'), config('laravel-directadmin.port'));
             $api->set_login(config('laravel-directadmin.username'), config('laravel-directadmin.password'));
             return new LaravelDirectAdmin($api);
