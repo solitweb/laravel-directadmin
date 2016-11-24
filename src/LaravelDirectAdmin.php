@@ -72,6 +72,8 @@ class LaravelDirectAdmin
      */
     private function extractMethod($methodName, $arguments)
     {
+        $arguments = count($arguments) > 0 ? $arguments[0] : $arguments ;
+
         if(strpos($methodName, "get") !== false) {
             return $this->extractCommand("get", substr($methodName, 3), $arguments);
         }
