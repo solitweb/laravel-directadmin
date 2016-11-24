@@ -38,7 +38,7 @@ class LaravelDirectAdmin
      *
      * @return array result parsed
      */
-    public function request($method, $command, $options = [])
+    public function request($command, $options = [])
     {
         $this->connection->query('/CMD_API_'.$command, $options);
         return $this->connection->fetch_parsed_body();
