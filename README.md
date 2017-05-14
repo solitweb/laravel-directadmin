@@ -18,7 +18,7 @@ You must also install this service provider:
 // config/app.php
 'providers' => [
     ...
-    Solitweb\LaravelDirectAdmin\DirectAdminServiceProvider::class,
+    Solitweb\LaravelDirectAdmin\LaravelDirectAdminServiceProvider::class,
 ];
 ```
 
@@ -28,14 +28,14 @@ Optionally, register the facade:
 // config/app.php
 'aliases' => [
     ...
-    'DirectAdmin' => Solitweb\LaravelDirectAdmin\DirectAdminFacade::class,
+    'DirectAdmin' => Solitweb\LaravelDirectAdmin\LaravelDirectAdminFacade::class,
 ];
 ```
 
 To publish the config file to app/config/laravel-directadmin.php run:
 
 ```bash
-php artisan vendor:publish --provider="Solitweb\LaravelDirectAdmin\DirectAdminServiceProvider"
+php artisan vendor:publish --provider="Solitweb\LaravelDirectAdmin\LaravelDirectAdminServiceProvider"
 ```
 
 ## Usage
