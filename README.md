@@ -12,7 +12,11 @@ You can install this package via Composer using:
 composer require solitweb/laravel-directadmin
 ```
 
-You must also install this service provider:
+Laravel 5.5 uses Package Auto-Discovery, so doesn't require you to manually add the ServiceProvider.
+
+## Laravel 5.5+:
+
+If you don't use auto-discovery, add the ServiceProvider to the providers array in config/app.php
 
 ```php
 // config/app.php
