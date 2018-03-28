@@ -34,5 +34,15 @@
         "psr-4": {
             "Solitweb\\LaravelDirectAdmin\\Test\\": "tests"
         }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Solitweb\\LaravelDirectAdmin\\LaravelDirectAdminServiceProvider"
+            ],
+            "aliases": {
+                "DirectAdmin": "Solitweb\\LaravelDirectAdmin\\LaravelDirectAdminFacade"
+            }
+        }
     }
 }
