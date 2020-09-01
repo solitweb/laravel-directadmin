@@ -45,6 +45,30 @@ class LaravelDirectAdmin
         $this->connection->query('/CMD_API_'.$command, $options);
         return $this->connection->fetch_parsed_body();
     }
+    
+    /**
+     * Return the last HTTP status code.
+	 * 200 = OK;
+	 * 403 = FORBIDDEN;
+	 * etc.
+     *
+     * @return int HTTP status code
+     */
+    public function get_status_code()
+    {
+        return $this->connection->get_status_code();
+    }
+    
+    /**
+	 * Specify a username and password.
+	 *
+	 * @param string|null username. default is null
+	 * @param string|null password. default is null
+	 */
+    public function set_login($username, $password)
+    {
+        $this->connection->set_login($username, $password);
+    }
 
     /**
      * Magic Method
