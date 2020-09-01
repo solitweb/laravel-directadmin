@@ -96,7 +96,7 @@ No more annoying login screen errors on invalid login parameters.
 
 ```php
 $data = DirectAdmin::get()->requestJSON('SHOW_USERS');
-$respone = DirectAdmin::get_status_code();
+$response = DirectAdmin::get_status_code();
 ```
 
 Also added magic methods support:
