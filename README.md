@@ -89,6 +89,29 @@ return DirectAdmin::postAccountAdmin([
 
 Magic Methods are named after the method (get/post) followed by the command without `CMD_API_` in CamelCase. So, if you want to make a GET request with the CMD_API_SHOW_ALL_USERS command, the magic method would be `getShowAllUsers()`.
 
+### JSON Support
+
+It's possible to use JSON support, this allows using the HTTP code for feedback.
+No more annoying login screen errors on invalid login parameters.
+
+```php
+$data = DirectAdmin::get()->requestJSON('SHOW_USERS');
+$respone = DirectAdmin::get_status_code();
+```
+
+Also added magic methods support:
+```php
+$data = DirectAdmin::getjsonShowUsers();
+```
+
+### Change user during runtime
+
+It's also possible to change the user during runtime as shown below:
+
+```php
+DirectAdmin::set_login('username', 'password')
+```
+
 ## Credits
 - [Phi1 'l0rdphi1' Stier](mailto:l0rdphi1@liquenox.net)
 - [Joshua de Gier / Pendo](https://github.com/PendoNL)
