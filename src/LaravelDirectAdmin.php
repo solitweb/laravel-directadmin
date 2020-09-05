@@ -47,6 +47,44 @@ class LaravelDirectAdmin
     }
 
     /**
+     * Do an API request with JSON as an answer.
+     * HTTP response codes are working with JSON requests.
+     *
+     * @return array json parsed
+     */
+    public function requestjson($command, $options = [])
+    {
+        $json = ['json' => 'yes'];
+        $options = array_merge($json, $options);
+        $this->connection->query('/CMD_API_'.$command, $options);
+        return json_decode($this->connection->fetch_body());
+    }
+    
+    /**
+     * Return the last HTTP status code.
+	 * 200 = OK;
+	 * 403 = FORBIDDEN;
+	 * etc.
+     *
+     * @return int HTTP status code
+     */
+    public function get_status_code()
+    {
+        return $this->connection->get_status_code();
+    }
+    
+    /**
+	 * Specify a username and password.
+	 *
+	 * @param string|null username. default is null
+	 * @param string|null password. default is null
+	 */
+    public function set_login($username, $password)
+    {
+        $this->connection->set_login($username, $password);
+    }
+
+    /**
      * Magic Method
      *
      * @param $methodName
@@ -74,8 +112,16 @@ class LaravelDirectAdmin
      */
     private function extractMethod($methodName, $arguments)
     {
+        if(strpos($methodName, "getjson") !== false) {
+            return $this->extractCommand("getjson", substr($methodName, 7), $arguments);
+        }
+
         if(strpos($methodName, "get") !== false) {
             return $this->extractCommand("get", substr($methodName, 3), $arguments);
+        }
+
+        if(strpos($methodName, "postjson") !== false) {
+            return $this->extractCommand("postjson", substr($methodName, 8), $arguments);
         }
 
         if(strpos($methodName, "post") !== false) {
@@ -95,8 +141,23 @@ class LaravelDirectAdmin
      */
     private function extractCommand($method, $command, $arguments)
     {
-        $this->connection->set_method(strtoupper($method));
+        if($method == "post" || $method == "postjson")
+        {
+            $this->connection->set_method("POST");
+        }
+        else
+        {
+            $this->connection->set_method("GET");
+        }
 
+
+        if($method == "postjson" || $method == "getjson")
+        {
+            return $this->requestjson(
+                $this->camelToSnake($command),
+                $arguments
+            );
+        }
         return $this->request(
             $this->camelToSnake($command),
             $arguments
