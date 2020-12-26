@@ -95,13 +95,13 @@ It's possible to use JSON support, this allows using the HTTP code for feedback.
 No more annoying login screen errors on invalid login parameters.
 
 ```php
-$data = DirectAdmin::get()->requestJSON('SHOW_USERS');
+$data = DirectAdmin::get()->requestJson('SHOW_USERS');
 $response = DirectAdmin::get_status_code();
 ```
 
 Also added magic methods support:
 ```php
-$data = DirectAdmin::getjsonShowUsers();
+$data = DirectAdmin::getJsonShowUsers();
 ```
 
 ### Change user during runtime

@@ -52,7 +52,7 @@ class LaravelDirectAdmin
      *
      * @return array json parsed
      */
-    public function requestjson($command, $options = [])
+    public function requestJson($command, $options = [])
     {
         $json = ['json' => 'yes'];
         $options = array_merge($json, $options);
@@ -112,16 +112,16 @@ class LaravelDirectAdmin
      */
     private function extractMethod($methodName, $arguments)
     {
-        if(strpos($methodName, "getjson") !== false) {
-            return $this->extractCommand("getjson", substr($methodName, 7), $arguments);
+        if(strpos(strtolower($methodName), "getjson") !== false) {
+            return $this->extractCommand("getJson", substr($methodName, 7), $arguments);
         }
 
         if(strpos($methodName, "get") !== false) {
             return $this->extractCommand("get", substr($methodName, 3), $arguments);
         }
 
-        if(strpos($methodName, "postjson") !== false) {
-            return $this->extractCommand("postjson", substr($methodName, 8), $arguments);
+        if(strpos(strtolower($methodName), "postjson") !== false) {
+            return $this->extractCommand("postJson", substr($methodName, 8), $arguments);
         }
 
         if(strpos($methodName, "post") !== false) {
@@ -141,7 +141,7 @@ class LaravelDirectAdmin
      */
     private function extractCommand($method, $command, $arguments)
     {
-        if($method == "post" || $method == "postjson")
+        if($method == "post" || $method == "postJson")
         {
             $this->connection->set_method("POST");
         }
@@ -151,9 +151,9 @@ class LaravelDirectAdmin
         }
 
 
-        if($method == "postjson" || $method == "getjson")
+        if($method == "postJson" || $method == "getJson")
         {
-            return $this->requestjson(
+            return $this->requestJson(
                 $this->camelToSnake($command),
                 $arguments
             );
