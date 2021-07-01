@@ -50,7 +50,7 @@ class LaravelDirectAdmin
      * Do an API request with JSON as an answer.
      * HTTP response codes are working with JSON requests.
      *
-     * @return array json parsed
+     * @return object JSON parsed
      */
     public function requestJson($command, $options = [])
     {
